@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :reviews
   resources :books
-  resources :users
-  post '/login', to: 'auth#create'
-          get '/current_user', to: 'auth#show'
-          post '/sign_up', to: 'users#create'
+  resource :users, only: [:create]
+  post "/login", to: "auth#login"
+  get "/auto_login", to: "auth#auto_login"
+  get "/user_is_authed", to: "auth#user_is_authed"
 end
