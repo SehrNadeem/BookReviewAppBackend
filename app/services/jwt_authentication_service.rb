@@ -1,14 +1,11 @@
-class JwtAuthenticationService
+# frozen_string_literal: true
 
+class JwtAuthenticationService
   def self.encode_token(payload)
     JWT.encode(payload, Rails.application.credentials.jwt_key)
   end
 
-  def auth_header
-    request.headers['Authorization']
-  end
-
-  def self.decoded_token
+  def self.decoded_token(auth_header)
     if auth_header
       token = auth_header.split(' ')[1]
       begin
@@ -19,8 +16,8 @@ class JwtAuthenticationService
     end
   end
 
-  def self.session_user
-    decoded_hash = decoded_token
+  def self.session_user(auth_header)
+    decoded_hash = decoded_token(auth_header)
     unless decoded_hash.empty?
       puts decoded_hash.class
       user_id = decoded_hash[0]['user_id']
@@ -28,8 +25,7 @@ class JwtAuthenticationService
     end
   end
 
-  def self.logged_in?
-    !!session_user
+  def self.logged_in?(request)
+    !!session_user(request)
   end
-
 end

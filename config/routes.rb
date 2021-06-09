@@ -2,10 +2,10 @@
 
 Rails.application.routes.draw do
   resources :reviews
-  resources :books
-  resource :users, only: [:create]
-  post '/login', to: 'auth#login'
-  get '/auto_login', to: 'auth#auto_login'
-  get '/user_is_authed', to: 'auth#user_is_authed'
+  resources :books, only: %i[create index show]  
+  resource :users, only: %i[create index]
+
   get '/profile', to: 'users#user_profile'
+  post 'authenticate', to: 'auth#authenticate'
+  get '/reviews/get_reviews_for_book/:id', to: 'reviews#get_reviews_for_book'
 end

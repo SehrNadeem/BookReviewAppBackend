@@ -45,3 +45,7 @@ gem 'rack-cors', '~> 1.1'
 gem 'active_model_serializers'
 
 gem 'simple_command'
+
+gem 'pry', '~> 0.13.1'
+
+gem 'carrierwave', '~> 2.0'
