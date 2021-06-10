@@ -49,3 +49,5 @@ gem 'simple_command'
 gem 'pry', '~> 0.13.1'
 
 gem 'carrierwave', '~> 2.0'
+
+gem 'rails_cursor_pagination'
