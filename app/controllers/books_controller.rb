@@ -3,10 +3,10 @@
 class BooksController < ApplicationController
   
   def index
-    books = Book.all
+    books = Book.all.includes(:user)
     posted_by = [];
     books.each_with_index do |book, index| 
-      posted_by[index] = User.find(book.user_id).username
+      posted_by[index] = book.user.username
     end
     if params[:page]
       page_info = params[:page].split(':')
@@ -36,18 +36,7 @@ class BooksController < ApplicationController
 
   def show
     book = Book.find(params[:id])
-    rating_sum = 0
-    reviews = book.reviews
-
-    if reviews.any?
-      reviews.each do |review|
-        rating_sum += review.rating
-      end
-      average_rating = rating_sum / reviews.size
-    else
-      average_rating = 0
-    end
-    render json: { book: book, average_rating: average_rating } 
+    render json: { book: book } 
   end
 
   private

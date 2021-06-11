@@ -25,7 +25,7 @@ class JwtAuthenticationService
     end
   end
 
-  def self.logged_in?(request)
-    !!session_user(request)
+  def self.logged_in?(auth_header)
+    session_user(auth_header).present?
   end
 end
