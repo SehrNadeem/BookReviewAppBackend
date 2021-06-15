@@ -1,0 +1,6 @@
+email:
+  every: 30s
+  class: EmailNewUsersJob
+  args:
+  queue: email
+  description: Checks for new users every minute and emails them

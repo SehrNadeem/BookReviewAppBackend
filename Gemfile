@@ -27,6 +27,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
@@ -51,3 +52,13 @@ gem 'pry', '~> 0.13.1'
 gem 'carrierwave', '~> 2.0'
 
 gem 'rails_cursor_pagination'
+
+gem 'redis'
+
+gem 'resque'
+
+gem 'resque-scheduler'
+
+gem 'resque-web', git: 'https://github.com/resque/resque-web.git', branch: 'resque-2', require: 'resque_web'
+
+gem 'active_scheduler'
