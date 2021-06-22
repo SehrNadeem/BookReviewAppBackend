@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2021_06_11_084748) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "cover_photo", limit: 100
     t.integer "average_rating"
     t.index ["user_id"], name: "fk_rails_bc582ddd02"
   end

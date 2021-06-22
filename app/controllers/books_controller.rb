@@ -8,20 +8,8 @@ class BooksController < ApplicationController
     books.each_with_index do |book, index| 
       posted_by[index] = book.user.username
     end
-    if params[:page]
-      page_info = params[:page].split(':')
 
-      if page_info[1].eql?("next")
-        pagination_result = RailsCursorPagination::Paginator.new(books, first: 3, after: page_info[0]).fetch
-      else
-        pagination_result = RailsCursorPagination::Paginator.new(books, last: 3, before: page_info[0]).fetch
-      end
-
-    else
-      pagination_result = RailsCursorPagination::Paginator.new(books, first: 3).fetch
-    end
-
-    books = pagination_result[:page]
+    books = Book.paginate(books, params[:page])
     render json: { books: books, posted_by: posted_by }
   end
 
@@ -37,6 +25,27 @@ class BooksController < ApplicationController
   def show
     book = Book.find(params[:id])
     render json: { book: book } 
+  end
+
+  def search
+    books = Book.includes(:user).where('title LIKE ?', "%#{params[:q]}%")
+    posted_by = [];
+    books.each_with_index do |book, index| 
+      posted_by[index] = book.user.username
+    end
+    # binding.pry
+    books = Book.paginate(books, params[:page])
+    render json: { books: books, posted_by: posted_by }
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    if book.destroyed?
+      render json: { delete_success: true }
+    else
+      render json: { errors: book.errors.full_messages }, status: :not_acceptable
+    end
   end
 
   private

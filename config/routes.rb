@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   mount Resque::Server, at: '/jobs'
   
   resources :reviews
-  resources :books, only: %i[create show]  
+  resources :books, only: %i[create show destroy]  
   resource :users, only: %i[create index]
 
   get '/profile', to: 'users#user_profile'
   post 'authenticate', to: 'auth#authenticate'
   get '/reviews/get_reviews_for_book/:id', to: 'reviews#get_reviews_for_book'
   get '/books_paginated(/:page)', to: 'books#index'
+  get '/search_books', to: 'books#search'
 
 end
 
